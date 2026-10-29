@@ -9,7 +9,7 @@ def create_app():
     def accueil():
         return jsonify({
             "application": "Atelier DevOps",
-            "version": os.environ.get("APP_VERSION", "0.1.0")
+            "version": os.environ.get("APP_VERSION", "0.2.0")
         })
 
     @app.errorhandler(404)
