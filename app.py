@@ -4,21 +4,26 @@ from flask import Flask, jsonify
 def create_app():
     app = Flask(__name__)
 
-    @app.get("/")
+    @app.route("/")
     def accueil():
         return jsonify({
             "application": "Atelier DevOps",
             "version": os.environ.get("APP_VERSION", "0.2.0")
         })
 
+    @app.route("/health")
+    def health():
+        return jsonify({
+            "status": "ok",
+            "version": os.environ.get("APP_VERSION", "0.2.0")
+        }), 200
+
     @app.errorhandler(404)
-    def introuvable(error):
+    def non_trouve(e):
         return jsonify({"erreur": "Ressource introuvable"}), 404
 
-    # Les nouvelles routes seront insérées ici avant le return
     return app
 
-app = create_app()
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app = create_app()
+    app.run(host="0.0.0.0", port=5000)
