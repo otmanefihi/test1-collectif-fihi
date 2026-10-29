@@ -18,6 +18,10 @@ class TestApplicationInitiale(unittest.TestCase):
         response = self.client.get("/route-inexistante")
         self.assertEqual(response.status_code, 404)
         self.assertIn("erreur", response.get_json())
-
+def test_health(self):
+        response = self.client.get('/health')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertEqual(data["status"], "ok")
 if __name__ == "__main__":
     unittest.main()
