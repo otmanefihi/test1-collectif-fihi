@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 
 def create_app():
@@ -17,6 +17,12 @@ def create_app():
         return jsonify({"erreur": "Ressource introuvable"}), 404
 
     # Ajouter les nouvelles routes avant return app.
+    @app.get("/salutation")
+    def salutation():
+        nom = request.args.get("nom", "").strip()
+        if not 1 <= len(nom) <= 30:
+            return jsonify({"erreur": "Le nom doit contenir entre 1 et 30 caracteres"}), 400
+        return jsonify({"message": f"Bonjour {nom}"})
     return app
 
 
